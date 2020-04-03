@@ -25,7 +25,7 @@ class Card extends Component {
         }
       >
         <Image
-          source={this.props.valor.icono}
+          source={this.props.valor.icon}
           style={{ width: 100, height: 100 }}
         />
         <Text>{this.props.valor.titulo}</Text>
@@ -48,17 +48,17 @@ export default class App extends Component {
     {
       titulo: "Crear Componentes",
       descripcion: "Hay dos formas de crear comonentes en react native",
-      icono: "https://reactnative.dev/docs/assets/p_cat1.png"
+      icon: "https://reactnative.dev/docs/assets/p_cat1.png"
     },
     {
       titulo: "Sintaxis JSX",
       descripcion: "Similar a html pero puedo usar javascript dentro",
-      icono: "https://reactnative.dev/docs/assets/p_cat1.png"
+      icon: "https://reactnative.dev/docs/assets/p_cat1.png"
     },
     {
       titulo: "Props",
       descripcion: "Propiedades para configurar o personalizar un componente",
-      icono: "https://reactnative.dev/docs/assets/p_cat1.png"
+      icon: "https://reactnative.dev/docs/assets/p_cat1.png"
     }
   ];
 
