@@ -43,10 +43,10 @@ class Home extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView style={ScrollView} contentContainerStyle={styles.container}>
         <Text>Capsulas</Text>
-        {this.capsulas.map((capsula) => {
-          return <Card navigation={this.props.navigation} valor={capsula} />;
+        {this.capsulas.map((capsula, key) => {
+          return <Card navigation={this.props.navigation} key={key} valor={capsula} />;
         })}
       </ScrollView>
     );
@@ -56,6 +56,9 @@ class Home extends Component {
 export default Home;
 
 const styles = StyleSheet.create({
+  ScrollView: {
+    width: '100%'
+  },
   container: {
     margin: 20,
     flexDirection: "column",
