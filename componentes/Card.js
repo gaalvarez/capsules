@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { View, Text, Image, Button, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
+import { Text, Button, Icon } from "@shoutem/ui";
 
 class Card extends Component {
   state = { sinVer: true };
@@ -13,10 +14,14 @@ class Card extends Component {
         />
         <Text>{this.props.valor.titulo}</Text>
         <Text>{this.props.valor.descripcion}</Text>
-        <Button
+        {/* <Button
           onPress={() => this.props.navigation.navigate("Detalle")}
           title={"Leer más..."}
-        />
+        /> */}
+        <Button>
+          <Icon name="turn-off" />
+          <Text>Leer Más...</Text>
+        </Button>
       </View>
     );
   }
