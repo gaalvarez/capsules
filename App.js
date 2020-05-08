@@ -7,16 +7,42 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
+import { Image } from "react-native";
 
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
+function HeaderBar() {
+  return (
+    <Image
+      source={{ uri: "https://reactnative.dev/docs/assets/p_cat1.png" }}
+      style={{ width: 40, height: 40 }}
+    />
+  );
+}
+
 function CapsulasStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="InicioSesion" component={InicioSesion} />
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="InicioSesion"
+        component={InicioSesion}
+        options={{
+          headerTitle: (props) => <HeaderBar {...props} />,
+        }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={({ route }) => ({
+          title: "Bienvenido " + route.params.usuario,
+          headerStyle: {
+            backgroundColor: "blue",
+          },
+          headerTintColor: "white",
+        })}
+      />
       <Stack.Screen name="Detalle" component={Detalle} />
     </Stack.Navigator>
   );
