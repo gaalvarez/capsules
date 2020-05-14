@@ -14,12 +14,14 @@ class Card extends Component {
         />
         <Text>{this.props.valor.titulo}</Text>
         <Text>{this.props.valor.descripcion}</Text>
-        {/* <Button
-          onPress={() => this.props.navigation.navigate("Detalle")}
+        <Button
+          onPress={() =>
+            this.props.navigation.navigate("Detalle", {
+              capsula: this.props.valor,
+            })
+          }
           title={"Leer más..."}
-        /> */}
-        <Button>
-          <Icon name="turn-off" />
+        >
           <Text>Leer Más...</Text>
         </Button>
       </View>

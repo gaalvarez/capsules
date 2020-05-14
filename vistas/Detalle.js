@@ -10,9 +10,9 @@ class Detalle extends Component {
   render() {
     return (
       <View>
-        <Text> Titulo </Text>
-        <Text> Descripción </Text>
-        <Text> Explicación de éste detalle </Text>
+        <Text> {this.props.route.params.capsula.titulo} </Text>
+        <Text> Link </Text>
+        <Text> {this.props.route.params.capsula.link} </Text>
       </View>
     );
   }

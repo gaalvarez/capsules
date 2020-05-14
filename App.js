@@ -16,8 +16,8 @@ const Stack = createStackNavigator();
 function HeaderBar() {
   return (
     <Image
-      source={{ uri: "https://reactnative.dev/docs/assets/p_cat1.png" }}
-      style={{ width: 40, height: 40 }}
+      source={require("./assets/logo-capsules.png")}
+      style={{ width: 50, height: 50 }}
     />
   );
 }

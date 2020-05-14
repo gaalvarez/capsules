@@ -8,31 +8,37 @@ class Home extends Component {
       titulo: "Crear Componentes",
       descripcion: "Hay dos formas de crear comonentes en react native",
       icon: "https://reactnative.dev/docs/assets/p_cat1.png",
+      link: "https:github1.com",
     },
     {
       titulo: "Sintaxis JSX",
       descripcion: "Similar a html pero puedo usar javascript dentro",
       icon: "https://reactnative.dev/docs/assets/p_cat1.png",
+      link: "https:github2.com",
     },
     {
       titulo: "Props",
       descripcion: "Propiedades para configurar o personalizar un componente",
       icon: "https://reactnative.dev/docs/assets/p_cat1.png",
+      link: "https:github3.com",
     },
     {
       titulo: "Props",
       descripcion: "Propiedades para configurar o personalizar un componente",
       icon: "https://reactnative.dev/docs/assets/p_cat1.png",
+      link: "https:github.com",
     },
     {
       titulo: "Props",
       descripcion: "Propiedades para configurar o personalizar un componente",
       icon: "https://reactnative.dev/docs/assets/p_cat1.png",
+      link: "https:github4.com",
     },
     {
       titulo: "Props",
       descripcion: "Propiedades para configurar o personalizar un componente",
       icon: "https://reactnative.dev/docs/assets/p_cat1.png",
+      link: "https:github5.com",
     },
   ];
 
@@ -46,7 +52,13 @@ class Home extends Component {
       <ScrollView style={ScrollView} contentContainerStyle={styles.container}>
         <Text>Capsulas</Text>
         {this.capsulas.map((capsula, key) => {
-          return <Card navigation={this.props.navigation} key={key} valor={capsula} />;
+          return (
+            <Card
+              navigation={this.props.navigation}
+              key={key}
+              valor={capsula}
+            />
+          );
         })}
       </ScrollView>
     );
@@ -57,7 +69,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   ScrollView: {
-    width: '100%'
+    width: "100%",
   },
   container: {
     margin: 20,
