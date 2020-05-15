@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { StyleSheet } from "react-native";
 import { Button, TextInput, View, Text } from "@shoutem/ui";
 
+import * as Google from "expo-google-app-auth";
+
 class InicioSesion extends Component {
   constructor(props) {
     super(props);
-    this.state = { usuario: "", password: "" };
+    this.state = { signedIn: false, name: "", photoUrl: "" };
   }
 
   usuarios = [
@@ -30,10 +32,34 @@ class InicioSesion extends Component {
     }
   };
 
+  signIn = async () => {
+    try {
+      const result = await Google.logInAsync({
+        androidClientId:
+          "624991898701-j0p91162fhj93feoprehl9vca0uptjg7.apps.googleusercontent.com",
+        //iosClientId: YOUR_CLIENT_ID_HERE,  <-- if you use iOS
+        scopes: ["profile", "email"],
+      });
+
+      if (result.type === "success") {
+        this.setState({
+          signedIn: true,
+          name: result.user.name,
+          photoUrl: result.user.photoUrl,
+        });
+        this.props.navigation.navigate("Home", { usuario: this.state.name });
+      } else {
+        console.log("cancelled");
+      }
+    } catch (e) {
+      console.log("error", e);
+    }
+  };
+
   render() {
     return (
       <View style={estilos.contenedor}>
-        <TextInput
+        {/* <TextInput
           onChangeText={(usu) => this.setState({ usuario: usu })}
           placeholder={"Nombre usuario o correo"}
         />
@@ -41,12 +67,10 @@ class InicioSesion extends Component {
           onChangeText={(pass) => this.setState({ password: pass })}
           placeholder={"Contraseña"}
           secureTextEntry
-        />
-        <Button onPress={this.validarUsuario}>
-          <Text>Iniciar Sesión</Text>
+        /> */}
+        <Button onPress={this.signIn}>
+          <Text>Iniciar Sesión con Google</Text>
         </Button>
-        <Text>{this.state.usuario}</Text>
-        <Text>{this.state.password}</Text>
       </View>
     );
   }
