@@ -1,52 +1,45 @@
 import React, { Component } from "react";
 import { StyleSheet } from "react-native";
 import { Button, TextInput, View, Text } from "@shoutem/ui";
+import * as Google from "expo-google-app-auth";
 
 class InicioSesion extends Component {
   constructor(props) {
     super(props);
-    this.state = { usuario: "", password: "" };
+    this.state = { estaLogeado: false, nombre: "", urlFoto: "" };
   }
 
-  usuarios = [
-    { usuario: "prueba", password: "prueba123" },
-    { usuario: "jhon", password: "jhon123" },
-    { usuario: "andrea", password: "andrea123" },
-    { usuario: "dario", password: "dario123" },
-  ];
-
-  validarUsuario = () => {
-    const usuario = this.usuarios.find(
-      (usu) => usu.usuario === this.state.usuario
-    );
-    if (usuario) {
-      if (usuario.password === this.state.password) {
-        this.props.navigation.navigate("Home", { usuario: this.state.usuario });
+  signIn = async () => {
+    try {
+      const result = await Google.logInAsync({
+        androidClientId:
+          "624991898701-h7h390aadb6ic7ds0darmefpgfrp2bev.apps.googleusercontent.com",
+        scopes: ["profile", "email"],
+      });
+      if (result.type === "success") {
+        this.setState({
+          estaLogeado: true,
+          nombre: result.user.name,
+          urlFoto: result.user.photoUrl,
+        });
+        this.props.navigation.navigate("Home", {
+          usuario: this.state.nombre,
+          foto: this.state.urlFoto,
+        });
       } else {
-        alert("Usuario o contraseña incorrectos");
+        console.log("cancelled");
       }
-    } else {
-      alert("Usuario o contraseña incorrectos");
+    } catch (e) {
+      console.log("error", e);
     }
   };
 
   render() {
     return (
       <View style={estilos.contenedor}>
-        <TextInput
-          onChangeText={(usu) => this.setState({ usuario: usu })}
-          placeholder={"Nombre usuario o correo"}
-        />
-        <TextInput
-          onChangeText={(pass) => this.setState({ password: pass })}
-          placeholder={"Contraseña"}
-          secureTextEntry
-        />
-        <Button onPress={this.validarUsuario}>
-          <Text>Iniciar Sesión</Text>
+        <Button onPress={this.signIn}>
+          <Text>Iniciar con Google</Text>
         </Button>
-        <Text>{this.state.usuario}</Text>
-        <Text>{this.state.password}</Text>
       </View>
     );
   }

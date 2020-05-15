@@ -7,18 +7,31 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
-import { Image } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
+import { Image } from "@shoutem/ui";
 
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
-function HeaderBar() {
+function HeaderBar(props) {
   return (
-    <Image
-      source={require("./assets/logo-capsules.png")}
-      style={{ width: 50, height: 50 }}
-    />
+    <View style={styles.container}>
+      <View style={styles.item}>
+        <Image
+          source={require("./assets/logo-capsules.png")}
+          style={{ width: 50, height: 50 }}
+        />
+      </View>
+      <Text>{props.usuario}</Text>
+      <View style={styles.item}>
+        <Image
+          styleName="small-avatar"
+          source={{ uri: props.foto }}
+          style={{ width: 40, height: 40 }}
+        />
+      </View>
+    </View>
   );
 }
 
@@ -36,11 +49,7 @@ function CapsulasStack() {
         name="Home"
         component={Home}
         options={({ route }) => ({
-          title: "Bienvenido " + route.params.usuario,
-          headerStyle: {
-            backgroundColor: "blue",
-          },
-          headerTintColor: "white",
+          headerTitle: (props) => <HeaderBar {...props} {...route.params} />,
         })}
       />
       <Stack.Screen name="Detalle" component={Detalle} />
@@ -83,3 +92,15 @@ export default class App extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  item: {
+    flex: 1,
+  },
+});
