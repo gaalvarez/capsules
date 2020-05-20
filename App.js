@@ -7,31 +7,31 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, TouchableHighlight } from "react-native";
 import { Image } from "@shoutem/ui";
 
 import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
-function HeaderBar(props) {
+function HeaderTittle(props) {
   return (
-    <View style={styles.container}>
-      <View style={styles.item}>
-        <Image
-          source={require("./assets/logo-capsules.png")}
-          style={{ width: 50, height: 50 }}
-        />
-      </View>
-      <Text>{props.usuario}</Text>
-      <View style={styles.item}>
-        <Image
-          styleName="small-avatar"
-          source={{ uri: props.foto }}
-          style={{ width: 40, height: 40 }}
-        />
-      </View>
-    </View>
+    <Image
+      source={require("./assets/logo-capsules.png")}
+      style={{ width: 50, height: 50 }}
+    />
+  );
+}
+
+function HeaderButton(props) {
+  return (
+    <TouchableHighlight onPress={() => alert("user touch")}>
+      <Image
+        styleName="small-avatar"
+        source={{ uri: props.foto }}
+        style={styles.headerButton}
+      />
+    </TouchableHighlight>
   );
 }
 
@@ -42,14 +42,14 @@ function CapsulasStack() {
         name="InicioSesion"
         component={InicioSesion}
         options={{
-          headerTitle: (props) => <HeaderBar {...props} />,
+          headerTitle: (props) => <HeaderTittle {...props} />,
         }}
       />
       <Stack.Screen
         name="Home"
         component={Home}
         options={({ route }) => ({
-          headerTitle: (props) => <HeaderBar {...props} {...route.params} />,
+          headerRight: (props) => <HeaderButton {...props} {...route.params} />,
         })}
       />
       <Stack.Screen name="Detalle" component={Detalle} />
@@ -95,12 +95,15 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    display: "flex",
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  item: {
-    flex: 1,
+  headerButton: {
+    marginRight: 10,
+    width: 35,
+    height: 35,
   },
 });
