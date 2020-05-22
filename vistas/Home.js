@@ -12,7 +12,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    fetch('http://192.168.0.11:3000/capsulas')
+    fetch('http://181.62.245.222:3000/capsulas')
       .then((response) => {
         return response.json();
       })
@@ -20,7 +20,7 @@ class Home extends Component {
       .catch((error) => console.error(error))
       .finally(() => this.setState({ capsulasCargando: false }));
 
-    // fetch('http://192.168.0.11:3000/capsulas', {
+    // fetch('http://181.62.245.222:3000/capsulas', {
     //   method: 'POST',
     //   headers: { 'content-type': 'application/json' },
     //   body: JSON.stringify({
