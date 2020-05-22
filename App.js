@@ -4,10 +4,17 @@ import InicioSesion from "./vistas/InicioSesion";
 import Detalle from "./vistas/Detalle";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
+import {
+  MenuContext,
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from "react-native-popup-menu";
 
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
-import { View, StyleSheet, TouchableHighlight } from "react-native";
+import { View, StyleSheet, TouchableHighlight, Text } from "react-native";
 import { Image } from "@shoutem/ui";
 
 import { createStackNavigator } from "@react-navigation/stack";
@@ -16,10 +23,13 @@ const Stack = createStackNavigator();
 
 function HeaderTittle(props) {
   return (
-    <Image
-      source={require("./assets/logo-capsules.png")}
-      style={{ width: 50, height: 50 }}
-    />
+    <View style={styles.containerTittle}>
+      <Image
+        source={require("./assets/logo-capsules.png")}
+        style={{ width: 50, height: 50 }}
+      />
+      <Text>{props.usuario ? props.usuario : ""}</Text>
+    </View>
   );
 }
 
@@ -49,6 +59,7 @@ function CapsulasStack() {
         name="Home"
         component={Home}
         options={({ route }) => ({
+          headerTitle: (props) => <HeaderTittle {...props} {...route.params} />,
           headerRight: (props) => <HeaderButton {...props} {...route.params} />,
         })}
       />
@@ -106,4 +117,38 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
   },
+  containerTittle: {
+    display: "flex",
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
 });
+
+{
+  /* <MenuContext style={styles.container}>
+      <View>
+        <Menu>
+          <MenuTrigger>
+            <Image
+              source={require("./assets/logo-capsules.png")}
+              style={{ width: 50, height: 50 }}
+            />
+          </MenuTrigger>
+
+          <MenuOptions>
+            <MenuOption onSelect={() => alert(`Save`)} text="Save" />
+            <MenuOption onSelect={() => alert(`Delete`)}>
+              <Text style={{ color: "red" }}>Delete</Text>
+            </MenuOption>
+            <MenuOption
+              onSelect={() => alert(`Not called`)}
+              disabled={true}
+              text="Disabled"
+            />
+          </MenuOptions>
+        </Menu>
+      </View>
+    </MenuContext> */
+}
