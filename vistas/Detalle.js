@@ -11,8 +11,8 @@ class Detalle extends Component {
     return (
       <View>
         <Text> {this.props.route.params.capsula.titulo} </Text>
-        <Text> Link </Text>
-        <Text> {this.props.route.params.capsula.link} </Text>
+        <Text> Descripción </Text>
+        <Text> {this.props.route.params.capsula.descripcion} </Text>
       </View>
     );
   }

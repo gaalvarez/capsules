@@ -1,65 +1,55 @@
-import React, { Component } from "react";
-import { ScrollView, Text, StyleSheet } from "react-native";
-import Card from "../componentes/Card";
+import React, { Component } from 'react';
+import { ScrollView, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import Card from '../componentes/Card';
 
 class Home extends Component {
-  capsulas = [
-    {
-      titulo: "Crear Componentes",
-      descripcion: "Hay dos formas de crear comonentes en react native",
-      icon: "https://reactnative.dev/docs/assets/p_cat1.png",
-      link: "https:github1.com",
-    },
-    {
-      titulo: "Sintaxis JSX",
-      descripcion: "Similar a html pero puedo usar javascript dentro",
-      icon: "https://reactnative.dev/docs/assets/p_cat1.png",
-      link: "https:github2.com",
-    },
-    {
-      titulo: "Props",
-      descripcion: "Propiedades para configurar o personalizar un componente",
-      icon: "https://reactnative.dev/docs/assets/p_cat1.png",
-      link: "https:github3.com",
-    },
-    {
-      titulo: "Props",
-      descripcion: "Propiedades para configurar o personalizar un componente",
-      icon: "https://reactnative.dev/docs/assets/p_cat1.png",
-      link: "https:github.com",
-    },
-    {
-      titulo: "Props",
-      descripcion: "Propiedades para configurar o personalizar un componente",
-      icon: "https://reactnative.dev/docs/assets/p_cat1.png",
-      link: "https:github4.com",
-    },
-    {
-      titulo: "Props",
-      descripcion: "Propiedades para configurar o personalizar un componente",
-      icon: "https://reactnative.dev/docs/assets/p_cat1.png",
-      link: "https:github5.com",
-    },
-  ];
-
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      capsulas: [],
+      capsulasCargando: true,
+    };
+  }
+
+  componentDidMount() {
+    fetch('http://192.168.0.11:3000/capsulas')
+      .then((response) => {
+        return response.json();
+      })
+      .then((resJson) => this.setState({ capsulas: resJson }))
+      .catch((error) => console.error(error))
+      .finally(() => this.setState({ capsulasCargando: false }));
+
+    // fetch('http://192.168.0.11:3000/capsulas', {
+    //   method: 'POST',
+    //   headers: { 'content-type': 'application/json' },
+    //   body: JSON.stringify({
+    //     titulo: 'Prueba creacion 2',
+    //     descripcion: 'des de preuba creacion 2',
+    //     icon:
+    //       'https://www.pushwoosh.com/wp-content/uploads/2016/07/react-logo.png',
+    //   }),
+    // });
   }
 
   render() {
     return (
       <ScrollView style={ScrollView} contentContainerStyle={styles.container}>
         <Text>Capsulas</Text>
-        {this.capsulas.map((capsula, key) => {
-          return (
-            <Card
-              navigation={this.props.navigation}
-              key={key}
-              valor={capsula}
-            />
-          );
-        })}
+
+        {this.state.capsulasCargando ? (
+          <ActivityIndicator />
+        ) : (
+          this.state.capsulas.map((capsula, key) => {
+            return (
+              <Card
+                navigation={this.props.navigation}
+                key={key}
+                valor={capsula}
+              />
+            );
+          })
+        )}
       </ScrollView>
     );
   }
@@ -69,13 +59,13 @@ export default Home;
 
 const styles = StyleSheet.create({
   ScrollView: {
-    width: "100%",
+    width: '100%',
   },
   container: {
     margin: 20,
-    flexDirection: "column",
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
